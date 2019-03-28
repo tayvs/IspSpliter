@@ -47,7 +47,7 @@ object Splitter extends App {
 
     val partition = b.add(Partition[InputData](isps.size, in => isps.indexOf(in.isp)))
     isps.foreach(isp => partition
-      .via(Flow[InputData].map(in => ByteString(in.toOutputData.toCsv.mkString("", ",", "\n"))).async)
+      .via(Flow[InputData].map(in => ByteString(in.toOutputData.toCsv.mkString("", ";", "\n"))).async)
       .to(sizeRotatorSink(isp)))
 
     SinkShape(partition.in)
