@@ -21,7 +21,8 @@ object Splitter extends App {
   implicit val mat: ActorMaterializer = ActorMaterializer()
 
   val basePath = "D://"
-  val sourceFileName = "total_24-03-2019"
+//  val sourceFileName = "total_24-03-2019"
+  val sourceFileName = "Work-FR"
 
   def fileSizeTriggerCreator(isp: Isp): () => ByteString => Option[Path] = () => {
     var size: Int = 0
@@ -61,6 +62,10 @@ object Splitter extends App {
     .collect { case Some(inputData) => inputData }
     .to(ispFileWriterSink)
     .run()
-    .foreach(println)
+    .foreach { ioRes =>
+      println(ioRes)
+      Thread.sleep(100)
+      System.exit(0)
+    }
 
 }
